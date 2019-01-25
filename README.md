@@ -46,7 +46,7 @@ makemigrationsコマンド移行にDjangoアプリ（usersやarea31）を指定�
 ```sh
 docker-compose exec web python manage.py makemigrations <app_name>
 eg.) docker-compose exec web python manage.py makemigrations users
-eg.) docker-compose exec web python manage.py makemigrations mysite
+eg.) docker-compose exec web python manage.py makemigrations area31
 ```
 
 makemigrationsコマンドで出力したSQL文を実行します。
