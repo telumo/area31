@@ -106,7 +106,6 @@ http://localhost:8000/admin
 | /web                          | Djangoコンテナに関するディレクトリです。                                                                                                                                                                                                          |
 | /web/Dockerfile               | Djangoコンテナを作成するためのDockerfileです。                                                                                                                                                                                                    |
 | /web/requirements.txt         | Djangoコンテナ内でインストールするPythonモジュールリストです。                                                                                                                                                                                    |
-| /web/requirements.txt         | Djangoコンテナ内でインストールするPythonモジュールリストです。                                                                                                                                                                                    |
 
 ## ロードマップ
 
