@@ -6,88 +6,112 @@
 
 {% block main %}
 <div class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-7">
-          <div class="card">
-            <div class="card-header card-header-icon card-header-rose">
-              <div class="card-icon">
-                <i class="material-icons">perm_identity</i>
-              </div>
-              <h4 class="card-title">Edit Profile -
-                <small class="category">Complete your profile</small>
-              </h4>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">perm_identity</i>
             </div>
-            <div class="card-body">
-              <form>
-                <div class="row">
-                  <!-- <div class="col-md-5">
+            <h4 class="card-title">Edit Profile -
+              <small class="category">Complete your profile</small>
+            </h4>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <!-- <div class="col-md-5">
                     <div class="form-group">
                       <label class="bmd-label-floating">Company (disabled)</label>
                       <input type="text" class="form-control" disabled>
                     </div>
                   </div> -->
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Username</label>
-                      <input type="text" class="form-control" value="{{ user.get_username }}" disabled>
-                    </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Username</label>
+                    <input type="text" class="form-control" value="{{ user.get_username }}" disabled>
                   </div>
-                  <div class="col-md-8">
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Email address</label>
+                    <input type="email" class="form-control" value="{{ user.email }}" name="email">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Fist Name</label>
+                    <input type="text" class="form-control" value="{{user.first_name}}" name="first_name">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Last Name</label>
+                    <input type="text" class="form-control" value="{{user.last_name}}" name="last_name">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>About Me</label>
                     <div class="form-group">
-                      <label class="bmd-label-floating">Email address</label>
-                      <input type="email" class="form-control">
+                      <!-- <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label> -->
+                      <textarea class="form-control" rows="5" name="about_me"></textarea>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Fist Name</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Last Name</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label>About Me</label>
-                      <div class="form-group">
-                        <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                        <textarea class="form-control" rows="5"></textarea>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                      <div class="fileinput-new thumbnail">
+                        <img src="{{ user.profile.image.url }}" alt="...">
+                      </div>
+                      <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                      <div>
+                        <span class="btn btn-rose btn-round btn-file">
+                          <span class="fileinput-new">Select image</span>
+                          <span class="fileinput-exists">Change</span>
+                          <input type="file" name="..." />
+                        </span>
+                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i
+                            class="fa fa-times"></i> Remove</a>
                       </div>
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-rose pull-right">Update Profile</button>
-                <div class="clearfix"></div>
-              </form>
-            </div>
+              </div>
+              <button type="submit" class="btn btn-rose pull-right">Update Profile</button>
+              <div class="clearfix"></div>
+            </form>
           </div>
         </div>
-        <div class="col-md-5">
-          <div class="card card-profile">
-            <div class="card-avatar">
-              <a href="#pablo">
-                <img class="img" src="../../assets/img/faces/marc.jpg" />
-              </a>
+      </div>
+      <div class="col-md-5">
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">place</i>
             </div>
-            <div class="card-body">
-              <h4 class="card-title">Location</h4>
-              
-              <a href="#pablo" class="btn btn-rose btn-round">Follow</a>
-            </div>
+            <h4 class="card-title">Location
+              <small class="category">Add your location</small>
+            </h4>
+          </div>
+
+          <div class="card-body">
+
+            <a href="#pablo" class="btn btn-rose btn-round">Add</a>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
 
 {% block script %}

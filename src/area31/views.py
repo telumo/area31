@@ -2,7 +2,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 from area31.models import *
-# from django.contrib.auth.forms import UserCreationForm, UserLoginForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator

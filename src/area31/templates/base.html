@@ -38,12 +38,12 @@
       <div class="sidebar-wrapper">
         <div class="user">
           <div class="photo">
-            <img src="{% static 'assets/img/faces/avatar.jpg' %}" />
+            <img src="{{ user.profile.image.url }}" />
           </div>
           <div class="user-info">
             <a href="{% url 'profile' %}" class="nav-link">
               <span>
-                {{ user.get_username }}
+                {{ user.first_name }} {{ user.last_name }}@{{ user.get_username }} {{ user.profile.gender}}
               </span>
             </a>
           </div>
