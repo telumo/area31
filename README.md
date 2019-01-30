@@ -45,7 +45,7 @@ makemigrationsコマンド移行にDjangoアプリ（usersやarea31）を指定�
 
 ```sh
 docker-compose exec web python manage.py makemigrations <app_name>
-eg.) docker-compose exec web python manage.py makemigrations users
+eg.) docker-compose exec web python manage.py makemigrations accounts
 eg.) docker-compose exec web python manage.py makemigrations area31
 ```
 
@@ -60,7 +60,7 @@ docker-compose exec web python manage.py migrate
 Djangoのズーパーユーザーを登録します。
 createsuperuserコマンドを実行後、username、email address、passwordを入力してください。
 ```
-docker-compose exec -it web python manage.py createsuperuser
+docker-compose exec web python manage.py createsuperuser --username=admin --email=admin@example.com
 ```
 
 #### アクセス

@@ -1,10 +1,15 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
-
 from area31.models import *
+# from django.contrib.auth.forms import UserCreationForm, UserLoginForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 
 
+@method_decorator(login_required, name='dispatch')
 class MapView(TemplateView):
     template_name = "map.html"
 
@@ -12,6 +17,7 @@ class MapView(TemplateView):
         context = super(MapView, self).get_context_data(**kwargs)
         return render(self.request, self.template_name, context)
 
+@method_decorator(login_required, name='dispatch')
 class UserListView(TemplateView):
     template_name = "users.html"
 
@@ -19,16 +25,10 @@ class UserListView(TemplateView):
         context = super(UserListView, self).get_context_data(**kwargs)
         return render(self.request, self.template_name, context)
 
-class LoginView(TemplateView):
-    template_name = "login.html"
+@method_decorator(login_required, name='dispatch')
+class ProfileView(TemplateView):
+    template_name = "profile.html"
 
     def get(self, request, *args, **kwargs):
-        context = super(LoginView, self).get_context_data(**kwargs)
-        return render(self.request, self.template_name, context)
-
-class RegisterView(TemplateView):
-    template_name = "register.html"
-
-    def get(self, request, *args, **kwargs):
-        context = super(RegisterView, self).get_context_data(**kwargs)
+        context = super(ProfileView, self).get_context_data(**kwargs)
         return render(self.request, self.template_name, context)

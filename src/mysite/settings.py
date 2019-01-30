@@ -25,8 +25,7 @@ SECRET_KEY = 'f-1pz0+z-3)ki2i#^ge5!1uj!^rxrfqghk8uxa==inu0axy1ct'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -38,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'area31',
-    'users'
+    'accounts',
 ]
 
-# Application definition
-AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'map'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
