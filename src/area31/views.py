@@ -38,16 +38,13 @@ def edit_profile(request):
         user_form = UserUpdateForm(request.POST or None, instance=request.user)
         profile_form = ProfileForm(request.POST or None, instance=request.user.profile)
 
-        # Userモデルの処理。ログインできるようis_activeをTrueにし保存
         user = user_form.save(commit=False)
-        user.is_active = True
         user.save()
 
-        # Profileモデルの処理。↑のUserモデルと紐づけましょう。
         profile = profile_form.save(commit=False)
         profile.user = user
         profile.save()
-        
+
         return redirect("profile")
 
     else:
