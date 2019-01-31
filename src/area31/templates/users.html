@@ -29,7 +29,7 @@
                     <th>Name</th>
                     <th>Gender</th>
                     <th>Grad Year</th>
-                    <th>Enter Year</th>
+                    <th>The Class of</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -38,7 +38,7 @@
                     <th>Name</th>
                     <th>Gender</th>
                     <th>Grad Year</th>
-                    <th>Enter Year</th>
+                    <th>The Class of</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -48,7 +48,7 @@
                     <td>{{ u.first_name }} {{ u.last_name }}</td>
                     <td>{{ u.profile.get_gender_display }}</td>
                     <td>{{ u.profile.grad_year }}</td>
-                    <td>{{ u.profile.enter_year }}</td>
+                    <td>{{ u.profile.class_of }}</td>
                   </tr>
                   {% endfor%}
                 </tbody>

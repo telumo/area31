@@ -55,12 +55,26 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Grad Year</label>
+                    <input type="text" class="form-control" value="{{user.profile.grad_year}}" name="grad_year">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">The Class of</label>
+                    <input type="text" class="form-control" value="{{user.profile.class_of}}" name="class_of">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>About Me</label>
                     <div class="form-group">
                       <!-- <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label> -->
-                      <textarea class="form-control" rows="5" name="about_me"></textarea>
+                      <textarea class="form-control" rows="5" name="about_me">{{ user.profile.about_me }}</textarea>
                     </div>
                   </div>
                 </div>
@@ -70,11 +84,11 @@
                   <div class="form-group">
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                       <div class="fileinput-new thumbnail">
-                          {% if not user.profile.image.url %}
-                          <img src="{{ user.profile.image.url }}" alt="...">
-                          {% else %}
-                          <img src="{% static 'assets/img/default-avatar.png'%}" alt="...">
-                          {% endif %}
+                        {% if not user.profile.image.url %}
+                        <img src="{{ user.profile.image.url }}" alt="...">
+                        {% else %}
+                        <img src="{% static 'assets/img/default-avatar.png'%}" alt="...">
+                        {% endif %}
                       </div>
                       <div class="fileinput-preview fileinput-exists thumbnail"></div>
                       <div>

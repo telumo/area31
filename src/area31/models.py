@@ -8,11 +8,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
 class Profile(models.Model):
-    YEARS = (
-    (1990, 1990),
-    (1991, 1991),
-    (1992, 1992),
-    )
+
+    GRAD_YEARS = tuple(((i, i) for i in range(1970, 2030)))
+
+    CLASS_OF = tuple(((i, i) for i in range(1, 50)))
+
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -21,8 +21,9 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.CharField(verbose_name='性別', max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
-    grad_year = models.IntegerField(verbose_name='入学年', choices=YEARS, blank=True, null=True)
-    enter_year = models.IntegerField(verbose_name='卒業年', choices=YEARS, blank=True, null=True)
+    grad_year = models.IntegerField(verbose_name='入学年', choices=GRAD_YEARS, default=2017)
+    class_of = models.IntegerField(verbose_name='卒業年', choices=CLASS_OF, default=31)
+    about_me = models.TextField(blank=True, null=True)
     image = models.ImageField(verbose_name='プロフィール画像', upload_to="image/", blank=True, null=True)
 
     def __str__(self):
