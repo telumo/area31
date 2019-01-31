@@ -14,13 +14,13 @@ class Profile(models.Model):
     (1992, 1992),
     )
     GENDER_CHOICES = (
-        (1, '男性'),
-        (2, '女性'),
-        (3, 'その他'),
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Others'),
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    gender = models.IntegerField(verbose_name='性別', choices=GENDER_CHOICES, blank=True, null=True)
+    gender = models.CharField(verbose_name='性別', max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     grad_year = models.IntegerField(verbose_name='入学年', choices=YEARS, blank=True, null=True)
     enter_year = models.IntegerField(verbose_name='卒業年', choices=YEARS, blank=True, null=True)
     image = models.ImageField(verbose_name='プロフィール画像', upload_to="image/", blank=True, null=True)

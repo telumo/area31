@@ -70,7 +70,11 @@
                   <div class="form-group">
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                       <div class="fileinput-new thumbnail">
-                        <img src="{{ user.profile.image.url }}" alt="...">
+                          {% if not user.profile.image.url %}
+                          <img src="{{ user.profile.image.url }}" alt="...">
+                          {% else %}
+                          <img src="{% static 'assets/img/default-avatar.png'%}" alt="...">
+                          {% endif %}
                       </div>
                       <div class="fileinput-preview fileinput-exists thumbnail"></div>
                       <div>
