@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
-from area31.models import *
+from .models import Location
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -12,6 +12,14 @@ from .forms import ProfileForm, UserUpdateForm
 @method_decorator(login_required, name='dispatch')
 class MapView(TemplateView):
     template_name = "map.html"
+
+    @cached_property
+    def get_users(self):
+        return User.objects.all()
+    
+    @cached_property
+    def get_locations(self):
+        return Location.objects.all()
 
     def get(self, request, *args, **kwargs):
         context = super(MapView, self).get_context_data(**kwargs)
@@ -48,10 +56,12 @@ def edit_profile(request):
         return redirect("profile")
 
     else:
+        parsonl_locations = Location.objects.filter(user=request.user)
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
         context = {
             "user_form": user_form,
             "profile_form": profile_form,
+            "parsonal_locations" : parsonl_locations
         }
         return render(request, 'profile.html', context)
