@@ -14,19 +14,14 @@
             <div class="card-icon">
               <i class="material-icons">perm_identity</i>
             </div>
-            <h4 class="card-title">Edit Profile -
+            <h4 class="card-title">Profile -
               <small class="category">Complete your profile</small>
             </h4>
           </div>
           <div class="card-body">
-            <form>
+            <form class="form" method="post" action="{% url 'profile'%}">
+              {% csrf_token %}
               <div class="row">
-                <!-- <div class="col-md-5">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Company (disabled)</label>
-                      <input type="text" class="form-control" disabled>
-                    </div>
-                  </div> -->
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="bmd-label-floating">Username</label>
@@ -36,7 +31,7 @@
                 <div class="col-md-8">
                   <div class="form-group">
                     <label class="bmd-label-floating">Email address</label>
-                    <input type="email" class="form-control" value="{{ user.email }}" name="email">
+                    {{ user_form.email }}
                   </div>
                 </div>
               </div>
@@ -44,37 +39,45 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="bmd-label-floating">Fist Name</label>
-                    <input type="text" class="form-control" value="{{user.first_name}}" name="first_name">
+                    {{ user_form.first_name }}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="bmd-label-floating">Last Name</label>
-                    <input type="text" class="form-control" value="{{user.last_name}}" name="last_name">
+                    {{ user_form.last_name }}
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label class="bmd-label-floating">Grad Year</label>
-                    <input type="text" class="form-control" value="{{user.profile.grad_year}}" name="grad_year">
+                    <!-- <label class="bmd-label-floating">Grad Year</label> -->
+                    {{ profile_form.gender }}
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label class="bmd-label-floating">The Class of</label>
-                    <input type="text" class="form-control" value="{{user.profile.class_of}}" name="class_of">
+                    <!-- <label class="bmd-label-floating">Grad Year</label> -->
+                    {{ profile_form.grad_year }}
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <!-- <label class="bmd-label-floating">The Class of</label> -->
+                    {{ profile_form.class_of }}
                   </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>About Me</label>
                     <div class="form-group">
                       <!-- <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label> -->
-                      <textarea class="form-control" rows="5" name="about_me">{{ user.profile.about_me }}</textarea>
+                    {{ profile_form.about_me }}
+                    <!-- <textarea class="form-control" rows="5" name="about_me">{{ user.profile.about_me }}</textarea> -->
                     </div>
                   </div>
                 </div>
@@ -84,11 +87,12 @@
                   <div class="form-group">
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                       <div class="fileinput-new thumbnail">
-                        {% if not user.profile.image.url %}
+                        <!-- {% if not user.profile.image.url %}
                         <img src="{{ user.profile.image.url }}" alt="...">
                         {% else %}
                         <img src="{% static 'assets/img/default-avatar.png'%}" alt="...">
-                        {% endif %}
+                        {% endif %} -->
+                        {{ profile_form.image }}
                       </div>
                       <div class="fileinput-preview fileinput-exists thumbnail"></div>
                       <div>

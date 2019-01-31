@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('map/', area31_views.MapView.as_view(), name='map'),
     path('users/', area31_views.UserListView.as_view(), name='users'),
-    path('profile/', area31_views.ProfileView.as_view(), name='profile'),
+    path('profile/', area31_views.edit_profile, name='profile'),
     path('accounts/', include('accounts.urls')),
     path('', RedirectView.as_view(url='map/')),
 ]
