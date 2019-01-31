@@ -5,7 +5,46 @@
 {% block pagetitle %} Map {% endblock %}
 
 {% block main %}
-<div id="map"></div>
+<div id="map">
+</div>
+<button onclick="GetLocation();" type="button" rel="tooltip" class="btn btn-danger btn-round" data-original-title="" title="" id="button"
+  data-toggle="modal" data-target="#myModal" >
+  <i class="material-icons">add_circle</i>
+</button>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Location</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the
+          blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language
+          ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
+          paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful
+          Pointing has no control about the blind texts it is an almost unorthographic life One day however a small
+          line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
+        </p>
+        <div id="loc"></div>
+        <div class="form-group bmd-form-group is-filled">
+          <label class="label-control">Datetime Picker</label>
+          <input type="text" class="form-control datetimepicker" value="07/02/2018">
+          <span class="material-input"></span>
+          <span class="material-input"></span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link">Nice Button</button>
+        <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <i class="material-icons" id="button">add_circle</i> -->
 {% endblock %}
 
 {% block script %}
@@ -104,12 +143,13 @@
   }
   var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-  // var imagePath = '{{ user.profile.image.url }}';
+  button = document.getElementById("button");
+  button.index = 1;
+  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(button);
 
   var marker;
   var html;
   var infoWindow;
-
   {% for loc in view.get_locations %}
   marker = new google.maps.Marker({
     position: new google.maps.LatLng({{ loc.latitude }}, {{ loc.longitude }}),
@@ -135,5 +175,84 @@
   // To add the marker to the map, call setMap();
   marker.setMap(map);
   {% endfor %}
+
+  function GetLocation() {
+    // Geolocation APIに対応している
+    if (navigator.geolocation) {
+      // 現在地を取得
+      navigator.geolocation.getCurrentPosition(
+
+        // [第1引数] 取得に成功した場合の関数
+        function (position) {
+          // 取得したデータの整理
+          var data = position.coords;
+
+          // データの整理
+          var lat = data.latitude;
+          var lng = data.longitude;
+          var alt = data.altitude;
+          var accLatlng = data.accuracy;
+          var accAlt = data.altitudeAccuracy;
+          var heading = data.heading;			//0=北,90=東,180=南,270=西
+          var speed = data.speed;
+
+          // アラート表示
+          // alert("あなたの現在位置は、\n[" + lat + "," + lng + "]\nです。");
+          target = document.getElementById("loc");
+          target.innerHTML = "あなたの現在位置は、\n[" + lat + "," + lng + "]\nです。";
+
+        },
+
+        // [第2引数] 取得に失敗した場合の関数
+        function (error) {
+          // エラーコード(error.code)の番号
+          // 0:UNKNOWN_ERROR				原因不明のエラー
+          // 1:PERMISSION_DENIED			利用者が位置情報の取得を許可しなかった
+          // 2:POSITION_UNAVAILABLE		電波状況などで位置情報が取得できなかった
+          // 3:TIMEOUT					位置情報の取得に時間がかかり過ぎた…
+
+          // エラー番号に対応したメッセージ
+          var errorInfo = [
+            "原因不明のエラーが発生しました…。",
+            "位置情報の取得が許可されませんでした…。",
+            "電波状況などで位置情報が取得できませんでした…。",
+            "位置情報の取得に時間がかかり過ぎてタイムアウトしました…。"
+          ];
+
+          // エラー番号
+          var errorNo = error.code;
+
+          // エラーメッセージ
+          var errorMessage = "[エラー番号: " + errorNo + "]\n" + errorInfo[errorNo];
+
+          // アラート表示
+          alert(errorMessage);
+
+          // HTMLに書き出し
+          // document.getElementById("loc").innerHTML = errorMessage;
+        },
+
+        // [第3引数] オプション
+        {
+          "enableHighAccuracy": false,
+          "timeout": 8000,
+          "maximumAge": 2000,
+        }
+
+      );
+    }
+
+    // 対応していない場合
+    else {
+      // エラーメッセージ
+      var errorMessage = "お使いの端末は、GeoLacation APIに対応していません。";
+
+      // アラート表示
+      alert(errorMessage);
+
+      // HTMLに書き出し
+      // document.getElementById('result').innerHTML = errorMessage;
+    }
+  }
 </script>
 {% endblock%}
