@@ -47,15 +47,11 @@
                   {% for u in view.get_users %}
                   <tr>
                     <td>
-                      <div class="user">
-                        <div class="photo">
-                            {% if u.profile.image %}
-                            <img src="{{ u.profile.image.url }}" alt="..." width="30" height="30">
-                            {% else %}
-                            <img src="{% static 'assets/img/default-avatar.png'%}" alt="..." width="30" height="30">
-                            {% endif %}
-                        </div>
-                      </div>
+                      {% if u.profile.image %}
+                      <img src="{{ u.profile.image.url }}" alt="..." width="30" height="30">
+                      {% else %}
+                      <img src="{% static 'assets/img/default-avatar.png'%}" alt="..." width="30" height="30">
+                      {% endif %}
                     </td>
                     <td>{{ u.username }}</td>
                     <td>{{ u.first_name }} {{ u.last_name }}</td>
