@@ -9,21 +9,28 @@ from django.utils.functional import cached_property
 from .forms import ProfileForm, UserUpdateForm
 
 
-@method_decorator(login_required, name='dispatch')
-class MapView(TemplateView):
-    template_name = "map.html"
+@login_required
+def register_profile(request):
 
-    @cached_property
-    def get_users(self):
-        return User.objects.all()
-    
-    @cached_property
-    def get_locations(self):
-        return Location.objects.all()
+    if request.method == "POST":
+        user_form = UserUpdateForm(request.POST or None, instance=request.user)
+        profile_form = ProfileForm(request.POST or None, instance=request.user.profile)
 
-    def get(self, request, *args, **kwargs):
-        context = super(MapView, self).get_context_data(**kwargs)
-        return render(self.request, self.template_name, context)
+        user = user_form.save(commit=False)
+        user.save()
+
+        profile = profile_form.save(commit=False)
+        profile.user = user
+        profile.save()
+
+        return redirect("profile")
+
+    else:
+        context = {
+            "get_users": User.objects.all(),
+            "get_locations": Location.objects.all(),
+        }
+        return render(request, 'map.html', context)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -32,7 +39,7 @@ class UserListView(TemplateView):
 
     @cached_property
     def get_users(self):
-        return User.objects.all()
+        return User.objects.filter(is_superuser=False)
 
     def get(self, request, *args, **kwargs):
         context = super(UserListView, self).get_context_data(**kwargs)

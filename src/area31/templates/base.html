@@ -38,7 +38,7 @@
       <div class="sidebar-wrapper">
         <div class="user">
           <div class="photo">
-              {% if user.profile.image.url %}
+              {% if user.profile.image %}
               <img src="{{ user.profile.image.url }}" alt="...">
               {% else %}
               <img src="{% static 'assets/img/default-avatar.png'%}" alt="...">
