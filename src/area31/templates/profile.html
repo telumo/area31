@@ -19,7 +19,7 @@
             </h4>
           </div>
           <div class="card-body">
-            <form class="form" method="post" action="{% url 'profile'%}">
+            <form class="form" method="post" action="{% url 'profile'%}" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="row">
                 <div class="col-md-4">
@@ -52,19 +52,19 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <!-- <label class="bmd-label-floating">Grad Year</label> -->
+                    <label class="bmd-label-floating">Gender</label>
                     {{ profile_form.gender }}
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <!-- <label class="bmd-label-floating">Grad Year</label> -->
+                    <label class="bmd-label-floating">Grad Year</label>
                     {{ profile_form.grad_year }}
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <!-- <label class="bmd-label-floating">The Class of</label> -->
+                    <label class="bmd-label-floating">The Class of</label>
                     {{ profile_form.class_of }}
                   </div>
                 </div>
@@ -87,27 +87,28 @@
                   <div class="form-group">
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                       <div class="fileinput-new thumbnail">
-                        <!-- {% if not user.profile.image.url %}
+                        {% if user.profile.image %}
                         <img src="{{ user.profile.image.url }}" alt="...">
                         {% else %}
                         <img src="{% static 'assets/img/default-avatar.png'%}" alt="...">
-                        {% endif %} -->
-                        {{ profile_form.image }}
+                        {% endif %}
                       </div>
-                      <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                      <!-- <div class="fileinput-preview fileinput-exists thumbnail"></div>
                       <div>
                         <span class="btn btn-rose btn-round btn-file">
                           <span class="fileinput-new">Select image</span>
                           <span class="fileinput-exists">Change</span>
                           <input type="file" name="..." />
+                            
                         </span>
                         <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i
                             class="fa fa-times"></i> Remove</a>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
               </div>
+              {{ profile_form.image }}
               <button type="submit" class="btn btn-rose pull-right">Update Profile</button>
               <div class="clearfix"></div>
             </form>
@@ -150,9 +151,15 @@
                   <td>{{ loc.label }}</td>
                   <td>{{ loc.latitude }}</td>
                   <td>{{ loc.longitude }}</td>
-                  <th><button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                      <i class="material-icons">close</i>
-                    </button></th>
+                  <th>
+                    <form class="form" action="{% url 'remove_location'%}" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="location_id" value="{{ loc.id }}"></input>
+                      <button type="submit" rel="tooltip" title="Remove Anyway" class="btn btn-danger btn-link btn-sm">
+                        <i class="material-icons">close</i>
+                      </button>
+                    </form>
+                  </th>
                 </tr>
                 {% endfor%}
               </tbody>

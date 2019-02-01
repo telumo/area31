@@ -148,7 +148,7 @@ class ProfileForm(forms.ModelForm):
         )
     )
 
-    image = forms.ImageField(
+    image = forms.FileField(
         label='プロフィール画像',
         required=False,
         # upload_to='image/',
@@ -156,7 +156,6 @@ class ProfileForm(forms.ModelForm):
         # height_field='url_height',
         # width_field='url_width',
         # default='assets/img/default-avatar.png'
-
     )
 
     class Meta:

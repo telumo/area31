@@ -8,6 +8,12 @@ from django.contrib.auth.models import User
 from django.utils.functional import cached_property
 from .forms import ProfileForm, UserUpdateForm, LocationRegisterForm
 
+@login_required
+def remove_location(request):
+    if request.method == "POST":
+        location_id = request.POST["location_id"]
+        Location.objects.filter(id=location_id).delete()
+        return redirect("profile")
 
 @login_required
 def register_location(request):
@@ -49,16 +55,18 @@ class UserListView(TemplateView):
 def edit_profile(request):
 
     if request.method == "POST":
-        user_form = UserUpdateForm(request.POST or None, instance=request.user)
-        profile_form = ProfileForm(request.POST or None, instance=request.user.profile)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save(commit=False)
-            user.save()
+        print(request.FILES)
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
+        # if user_form.is_valid() and profile_form.is_valid():
+        user = user_form.save(commit=False)
+        user.save()
+
+        profile = profile_form.save(commit=False)
+        profile.user = user
+        profile.save()
 
         return redirect("profile")
 
