@@ -59,12 +59,12 @@ class Location(models.Model):
     )
 
     latitude = models.CharField(
-        max_length=10,
+        max_length=20,
         blank=False,
     )
 
     longitude = models.CharField(
-        max_length=10,
+        max_length=20,
         blank=False,
     )
 
@@ -78,4 +78,4 @@ class Location(models.Model):
     )
 
     def __str__(self):
-        return self.latitude + ", " + self.longitude
+        return self.latitude + ", " + self.longitude + "(" + self.user.username + ")"

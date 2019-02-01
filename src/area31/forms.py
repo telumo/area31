@@ -1,13 +1,65 @@
-from .models import Profile
+from .models import Profile, Location, LocationLabel
 from django.contrib.auth.models import User
 from django import forms
 # from django.contrib.auth.forms import UserCreationForm
+
+class LocationRegisterForm(forms.ModelForm):
+
+    # user = forms.CharField()
+
+    latitude = forms.CharField(
+        label='latitude',
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class' : 'form-control',
+                'id' : 'latitude',
+                'value' : '',
+                'name' : 'latitude',
+                'readonly' : 'readonly'
+            }
+        )
+    )
+
+    longitude = forms.CharField(
+        label='longitude',
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class' : 'form-control',
+                'id' : 'longitude',
+                'value' : '',
+                'name' : 'longitude',
+                'readonly' : 'readonly'
+            }
+        )
+    )
+
+    label = forms.ModelChoiceField(
+        label='場所のラベル',
+        required=True,
+        widget=forms.Select(
+            attrs={
+                'class' : 'selectpicker',
+                'data-style' : 'select-with-transition',
+                'title' : 'Choose Location Label',
+                'data-size' :'7',
+                'name' : 'label'
+            }
+        ), 
+        queryset=LocationLabel.objects.all()
+    )
+
+    class Meta:
+        model = Location
+        fields = ("latitude", "longitude", "label",)
+
 
 class UserUpdateForm(forms.ModelForm):
 
     first_name = forms.CharField(
         label='名',
-        # required=True,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class' : 'form-control',
@@ -17,7 +69,7 @@ class UserUpdateForm(forms.ModelForm):
     
     last_name = forms.CharField(
         label='姓',
-        # required=True,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class' : 'form-control',
@@ -27,7 +79,7 @@ class UserUpdateForm(forms.ModelForm):
 
     email = forms.EmailField(
         label='Email',
-        # required=True,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class' : 'form-control',
@@ -35,7 +87,6 @@ class UserUpdateForm(forms.ModelForm):
         )
     )
 
-    
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email",)
@@ -88,7 +139,7 @@ class ProfileForm(forms.ModelForm):
 
     about_me = forms.CharField(
         label='姓',
-        # required=True,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class' : 'form-control',
@@ -99,6 +150,7 @@ class ProfileForm(forms.ModelForm):
 
     image = forms.ImageField(
         label='プロフィール画像',
+        required=False,
         # upload_to='image/',
         # verbose_name='添付画像',
         # height_field='url_height',

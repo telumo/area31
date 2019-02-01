@@ -1,34 +1,33 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
-from .models import Location
+from .models import Location, LocationLabel
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.utils.functional import cached_property
-from .forms import ProfileForm, UserUpdateForm
+from .forms import ProfileForm, UserUpdateForm, LocationRegisterForm
 
 
 @login_required
-def register_profile(request):
+def register_location(request):
 
     if request.method == "POST":
-        user_form = UserUpdateForm(request.POST or None, instance=request.user)
-        profile_form = ProfileForm(request.POST or None, instance=request.user.profile)
 
-        user = user_form.save(commit=False)
-        user.save()
+        location_form = LocationRegisterForm(request.POST or None)
 
-        profile = profile_form.save(commit=False)
-        profile.user = user
-        profile.save()
+        # if location_form.is_valid():
+        location = location_form.save(commit=False)
+        location.user = request.user
+        location.save()
 
-        return redirect("profile")
+        return redirect("map")
 
     else:
+        location_form = LocationRegisterForm()
         context = {
-            "get_users": User.objects.all(),
             "get_locations": Location.objects.all(),
+            "location_form" : location_form
         }
         return render(request, 'map.html', context)
 
@@ -53,12 +52,13 @@ def edit_profile(request):
         user_form = UserUpdateForm(request.POST or None, instance=request.user)
         profile_form = ProfileForm(request.POST or None, instance=request.user.profile)
 
-        user = user_form.save(commit=False)
-        user.save()
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save(commit=False)
+            user.save()
 
-        profile = profile_form.save(commit=False)
-        profile.user = user
-        profile.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
 
         return redirect("profile")
 
