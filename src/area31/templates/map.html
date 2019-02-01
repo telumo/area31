@@ -182,7 +182,8 @@
                       {% else %}\
                       <img src="{% static 'assets/img/default-avatar.png'%}" alt="..." width="30" height="30">\
                       {% endif %}\
-                      <br> [{{loc.label}}] <br> {{ loc.user.first_name }} {{ loc.user.last_name }}\
+                      <br> Label: {{loc.label}}\
+                      <br> Name: {{ loc.user.first_name }} {{ loc.user.last_name }}\
   ';
   infoWindow = new google.maps.InfoWindow({
     // 吹き出しに出す文
